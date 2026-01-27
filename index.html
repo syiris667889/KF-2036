@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Умная остановка №6</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 id="title">🚏 Остановка №6</h1>
+  <p id="subtitle">Каларашовка, Окницкий район</p>
+
+  <div class="lang">
+    <button onclick="setLang('ru')">RU</button>
+    <button onclick="setLang('ro')">RO</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <img id="stopImage" class="hero hidden"
+       src="" alt="Остановка будущего">
+
+  <section class="card">
+    <h2 id="chooseCity">Выберите город</h2>
+
+    <select id="city" onchange="updateAll()">
+      <option value="">— выбрать —</option>
+      <option value="Chisinau">Кишинёв</option>
+      <option value="Balti">Бельцы</option>
+      <option value="Soroca">Сороки</option>
+      <option value="Edinet">Единцы</option>
+    </select>
+
+    <p id="distance">—</p>
+    <p id="price">—</p>
+
+    <button onclick="pay()" id="payBtn">Оплатить</button>
+  </section>
+
+  <section id="result" class="card hidden">
+    <h2 id="success">✅ Оплата прошла успешно</h2>
+    <p id="busNumber"></p>
+    <p id="timer"></p>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
