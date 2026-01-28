@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+}
+
+header {
+  background: linear-gradient(120deg, #1e3c72, #2a5298);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.lang button {
+  margin: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 15px;
+}
+
+.hero {
+  width: 100%;
+  border-radius: 16px;
+  margin: 15px 0;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+}
+
+select, button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+button {
+  background: #2a5298;
+  color: white;
+  border: none;
+}
+
+.hidden {
+  display: none;
+}
+
+/* SMS */
+.sms {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ffffff;
+  padding: 15px 20px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  animation: slide 0.5s ease;
+  z-index: 10;
+}
+
+/* Прибытие */
+.arrival {
+  position: fixed;
+  inset: 0;
+  background: #1e3c72;
+  color: white;
+  font-size: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 20;
+}
+
+@keyframes slide {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
