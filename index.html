@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>🚏 Остановка №5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+</head>
+<body>
+
+<header>
+  <h1>🚏 Остановка №5</h1>
+  <p>Школа Каларашовка</p>
+</header>
+
+<main class="container">
+
+  <img id="stopImage" class="hero hidden" alt="Остановка">
+
+  <div class="card">
+    <h2>Выберите остановку</h2>
+
+    <select id="stop">
+      <option value="">— выбрать —</option>
+      <option value="School">Школа Каларашовка</option>
+      <option value="Bridge">Турецкий мост</option>
+      <option value="Oak">Дуб</option>
+      <option value="Hospital">Больница</option>
+      <option value="Church">Церковь</option>
+      <option value="Final">Конечная</option>
+    </select>
+
+    <p id="distance">—</p>
+    <p id="price">—</p>
+
+    <button id="payBtn">Оплатить</button>
+  </div>
+
+  <div id="sms" class="card hidden"></div>
+
+  <div id="mapCard" class="card hidden">
+    <div id="map"></div>
+  </div>
+
+</main>
+
+<audio id="paySound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3"></audio>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
