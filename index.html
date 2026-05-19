@@ -7,23 +7,22 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Transport Moldova 2036</title>
+<title>🚏 Остановка №5</title>
 
 <link rel="stylesheet" href="style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="bg-glow"></div>
 
-<header>
+<header class="topbar">
 
 <h1>🚏 Остановка №5</h1>
 
@@ -31,55 +30,93 @@ content="width=device-width, initial-scale=1.0">
 
 </header>
 
-<div class="container">
+<main class="container">
 
-<div class="panel">
+<section class="glass card">
 
-<h2>Маршруты</h2>
+<div class="badge">
+LIVE TRACKING
+</div>
 
-<select id="city">
+<h2>Выберите город</h2>
 
-<option value="">Выберите маршрут</option>
+<select id="stop">
 
-<option value="15">
-Отачь — 15 лей
+<option value="">
+— выбрать остановку —
 </option>
 
-<option value="30">
-Окница — 30 лей
+<option value="Otaci">
+Отачь
 </option>
 
-<option value="45">
-Единцы — 45 лей
+<option value="Ocnita">
+Окница
 </option>
 
-<option value="55">
-Бричаны — 55 лей
+<option value="Edinet">
+Единцы
 </option>
 
-<option value="70">
-Сороки — 70 лей
+<option value="Briceni">
+Бричаны
+</option>
+
+<option value="Donduseni">
+Дондюшаны
+</option>
+
+<option value="Soroca">
+Сороки
+</option>
+
+<option value="Balti">
+Бельцы
 </option>
 
 </select>
 
-<button onclick="buyTicket()">
+<div class="info-box">
 
+<p id="distance">
+Расстояние: —
+</p>
+
+<p id="price">
+Цена: —
+</p>
+
+</div>
+
+<button id="payBtn">
 Оплатить поездку
-
 </button>
 
-<div id="ticket"></div>
+</section>
+
+<div
+id="sms"
+class="card glass hidden">
+</div>
+
+<div
+id="mapCard"
+class="card glass hidden">
+
+<div id="map"></div>
 
 </div>
 
-<div class="viewer">
+</main>
 
-<canvas id="scene"></canvas>
+<audio
+id="paySound"
+src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3">
+</audio>
 
-</div>
-
-</div>
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
 <script src="script.js"></script>
 
