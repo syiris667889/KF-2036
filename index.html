@@ -1,57 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>🚏 Остановка №5</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Будующее село</title>
 
   <link rel="stylesheet" href="style.css">
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+
+  <script type="module"
+  src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  </script>
 </head>
+
 <body>
+
+<div class="bg"></div>
 
 <header>
   <h1>🚏 Остановка №5</h1>
-  <p>Школа Каларашовка</p>
+  <p>Школа Каларошовки</p>
 </header>
 
-<main class="container">
+<div class="container">
 
-  <img id="stopImage" class="hero hidden" alt="Остановка">
+  <div class="panel">
 
-  <div class="card">
-    <h2>Выберите остановку</h2>
+    <h2>Маршруты</h2>
 
-    <select id="stop">
-      <option value="">— выбрать —</option>
-      <option value="School">Школа Каларашовка</option>
-      <option value="Bridge">Турецкий мост</option>
-      <option value="Oak">Дуб</option>
-      <option value="Hospital">Больница</option>
-      <option value="Church">Церковь</option>
-      <option value="Final">Конечная</option>
+    <select id="city">
+      <option value="">Выберите маршрут</option>
+
+      <option value="15">Отачь — 15 лей</option>
+
+      <option value="30">Окница — 30 лей</option>
+
+      <option value="45">Единцы — 45 лей</option>
+
+      <option value="55">Бричаны — 55 лей</option>
+
+      <option value="70">Сороки — 70 лей</option>
     </select>
 
-    <p id="distance">—</p>
-    <p id="price">—</p>
+    <button onclick="buyTicket()">
+      Оплатить поездку
+    </button>
 
-    <button id="payBtn">Оплатить</button>
+    <div id="ticket"></div>
+
   </div>
 
-  <div id="sms" class="card hidden"></div>
+  <div class="viewer">
 
-  <div id="mapCard" class="card hidden">
-    <div id="map"></div>
+    <model-viewer
+      src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+
+      auto-rotate
+
+      camera-controls
+
+      shadow-intensity="1"
+
+      exposure="1.2">
+
+    </model-viewer>
+
   </div>
 
-</main>
+</div>
 
-<audio id="paySound" src="https://assets.mixkit.co/sfx/preview/mixkit-positive-notification-951.mp3"></audio>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
