@@ -1,260 +1,312 @@
-const ticket =
-document.getElementById("ticket");
+const stopSelect =
+document.getElementById("stop");
 
-function buyTicket(){
+const payBtn =
+document.getElementById("payBtn");
 
-const city =
-document.getElementById("city");
+const distanceEl =
+document.getElementById("distance");
 
-if(city.value === ""){
+const priceEl =
+document.getElementById("price");
 
-alert("Выберите маршрут");
+const sms =
+document.getElementById("sms");
 
-return;
+const mapCard =
+document.getElementById("mapCard");
 
-}
+const paySound =
+document.getElementById("paySound");
 
-ticket.innerHTML = `
+let map,
+busMarker,
+routeLine,
+moveInterval,
+timerInterval;
 
-<div class="card">
+const baseCoords =
+[48.276,27.170];
 
-✅ Оплата прошла успешно
+const stops = {
 
-<br><br>
-
-🚌 Автобус выехал
-
-<br><br>
-
-⏳ Прибытие через 8 секунд
-
-</div>
-
-`;
-
-setTimeout(()=>{
-
-ticket.innerHTML += `
-
-<div class="card arrive">
-
-🚏 Ваш автобус успешно прибыл
-
-</div>
-
-`;
-
-},8000);
-
-}
-
-// THREE JS
-
-const canvas =
-document.getElementById("scene");
-
-const scene =
-new THREE.Scene();
-
-scene.background =
-new THREE.Color(0x050816);
-
-const camera =
-new THREE.PerspectiveCamera(
-75,
-canvas.clientWidth /
-canvas.clientHeight,
-0.1,
-1000
-);
-
-camera.position.set(0,5,12);
-
-const renderer =
-new THREE.WebGLRenderer({
-canvas,
-antialias:true
-});
-
-renderer.setSize(
-canvas.clientWidth,
-canvas.clientHeight
-);
-
-const controls =
-new THREE.OrbitControls(
-camera,
-renderer.domElement
-);
-
-controls.enableDamping = true;
-
-// LIGHT
-
-const light =
-new THREE.PointLight(
-0x00c3ff,
-4
-);
-
-light.position.set(5,10,5);
-
-scene.add(light);
-
-const ambient =
-new THREE.AmbientLight(
-0xffffff,
-1
-);
-
-scene.add(ambient);
-
-// ROAD
-
-const road =
-new THREE.Mesh(
-
-new THREE.PlaneGeometry(30,4),
-
-new THREE.MeshStandardMaterial({
-color:0x111111
-})
-
-);
-
-road.rotation.x =
--Math.PI/2;
-
-scene.add(road);
-
-// NEON LINE
-
-const line =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(30,.05,.1),
-
-new THREE.MeshBasicMaterial({
-color:0x00c3ff
-})
-
-);
-
-line.position.y = 0.02;
-
-scene.add(line);
-
-// BUS
-
-let bus;
-
-const loader =
-new THREE.GLTFLoader();
-
-loader.load(
-
-'models/bus.glb',
-
-(gltf)=>{
-
-bus = gltf.scene;
-
-bus.scale.set(1.5,1.5,1.5);
-
-bus.position.set(-12,0,-0.3);
-
-scene.add(bus);
-
+Otaci:{
+name:"Отачь",
+distance:18,
+price:15,
+coords:[48.432,27.799]
 },
 
-undefined,
+Ocnita:{
+name:"Окница",
+distance:39,
+price:30,
+coords:[48.382,27.438]
+},
 
-(error)=>{
+Edinet:{
+name:"Единцы",
+distance:57,
+price:45,
+coords:[48.168,27.305]
+},
 
-console.log(error);
+Briceni:{
+name:"Бричаны",
+distance:75,
+price:55,
+coords:[48.357,27.069]
+},
 
+Donduseni:{
+name:"Дондюшаны",
+distance:91,
+price:65,
+coords:[48.242,27.610]
+},
+
+Soroca:{
+name:"Сороки",
+distance:120,
+price:80,
+coords:[48.156,28.284]
+},
+
+Balti:{
+name:"Бельцы",
+distance:150,
+price:95,
+coords:[47.761,27.929]
 }
 
-);
+};
 
-// CITY
-
-for(let i=0;i<40;i++){
-
-const building =
-new THREE.Mesh(
-
-new THREE.BoxGeometry(
-Math.random()*2+1,
-Math.random()*10+2,
-Math.random()*2+1
-),
-
-new THREE.MeshStandardMaterial({
-color:0x222244
-})
-
-);
-
-building.position.set(
-(Math.random()-0.5)*40,
-building.geometry.parameters.height/2,
-(Math.random()-0.5)*25
-);
-
-if(Math.abs(building.position.z)<4){
-
-building.position.z += 6;
-
-}
-
-scene.add(building);
-
-}
-
-// ANIMATION
-
-function animate(){
-
-requestAnimationFrame(animate);
-
-controls.update();
-
-if(bus){
-
-bus.position.x += 0.03;
-
-if(bus.position.x > 12){
-
-bus.position.x = -12;
-
-}
-
-}
-
-renderer.render(scene,camera);
-
-}
-
-animate();
-
-// RESIZE
-
-window.addEventListener(
-'resize',
+stopSelect.addEventListener(
+"change",
 ()=>{
 
-camera.aspect =
-canvas.clientWidth /
-canvas.clientHeight;
+const stop =
+stops[stopSelect.value];
 
-camera.updateProjectionMatrix();
+if(!stop) return;
 
-renderer.setSize(
-canvas.clientWidth,
-canvas.clientHeight
-);
+distanceEl.innerText =
+Расстояние: ${stop.distance} км;
+
+priceEl.innerText =
+Цена: ${stop.price} леев;
 
 }
 );
+
+payBtn.addEventListener(
+"click",
+async()=>{
+
+const stop =
+stops[stopSelect.value];
+
+if(!stop) return;
+
+paySound.currentTime = 0;
+
+paySound.play();
+
+if(navigator.vibrate){
+
+navigator.vibrate(150);
+
+}
+
+const time =
+Math.max(
+90,
+stop.distance * 4
+);
+
+showSMS(stop,time);
+
+showMap(stop.coords,time);
+
+}
+);
+
+function showSMS(
+stop,
+seconds
+){
+
+sms.classList.remove("hidden");
+
+sms.innerHTML = `
+
+<h3>
+✅ Оплата прошла
+</h3>
+
+<p>
+Маршрут до:
+<b>${stop.name}</b>
+</p>
+
+<p>
+Стоимость:
+<b>${stop.price} леев</b>
+</p>
+
+<p>
+⏱ Прибытие через
+<span id="time"></span>
+</p>
+
+`;
+
+startTimer(seconds);
+
+}
+
+function startTimer(sec){
+
+const t =
+document.getElementById("time");
+
+clearInterval(timerInterval);
+
+timerInterval =
+setInterval(()=>{
+
+const m =
+Math.floor(sec / 60);
+
+const s =
+sec % 60;
+
+t.innerText =
+${m}:${s < 10 ? "0" : ""}${s};
+
+if(--sec < 0){
+
+clearInterval(timerInterval);
+
+t.innerText = "00:00";
+
+sms.innerHTML += `
+
+<div style="
+margin-top:15px;
+padding:14px;
+border-radius:16px;
+background:#1aff8c22;
+border:1px solid #1aff8c55;
+">
+
+🚌 Ваш автобус успешно прибыл
+
+</div>
+
+`;
+
+}
+
+},1000);
+
+}
+
+function showMap(
+target,
+time
+){
+
+mapCard.classList.remove("hidden");
+
+if(!map){
+
+map =
+L.map("map")
+.setView(baseCoords,8);
+
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{
+attribution:"© OpenStreetMap"
+}
+).addTo(map);
+
+}
+
+if(busMarker)
+map.removeLayer(busMarker);
+
+if(routeLine)
+map.removeLayer(routeLine);
+
+clearInterval(moveInterval);
+
+const route = [
+baseCoords,
+target
+];
+
+routeLine =
+L.polyline(
+route,
+{
+color:"#4c7dff",
+weight:5
+}
+).addTo(map);
+
+busMarker =
+L.marker(route[0],{
+
+icon:L.icon({
+
+iconUrl:
+"https://cdn-icons-png.flaticon.com/512/3448/3448339.png",
+
+iconSize:[48,48]
+
+})
+
+}).addTo(map);
+
+let step = 0;
+
+const steps = time;
+
+moveInterval =
+setInterval(()=>{
+
+step++;
+
+const lat =
+route[0][0] +
+(route[1][0]-route[0][0]) *
+(step / steps);
+
+const lng =
+route[0][1] +
+(route[1][1]-route[0][1]) *
+(step / steps);
+
+busMarker.setLatLng([
+lat,
+lng
+]);
+
+if(step >= steps){
+
+clearInterval(moveInterval);
+
+}
+
+},1000);
+
+map.fitBounds(
+routeLine.getBounds(),
+{
+padding:[50,50]
+}
+);
+
 }
