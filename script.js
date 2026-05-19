@@ -101,12 +101,18 @@ priceEl.innerText =
 
 payBtn.addEventListener(
 "click",
-async()=>{
+()=>{
 
 const stop =
 stops[stopSelect.value];
 
-if(!stop) return;
+if(!stop){
+
+alert("Выберите город");
+
+return;
+
+}
 
 paySound.currentTime = 0;
 
