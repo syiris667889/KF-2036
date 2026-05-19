@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Будующее село</title>
 
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
 
-  <script type="module"
-  src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-  </script>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Transport Moldova 2036</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
 </head>
 
 <body>
@@ -17,54 +24,60 @@
 <div class="bg"></div>
 
 <header>
-  <h1>🚏 Остановка №5</h1>
-  <p>Школа Каларошовки</p>
+
+<h1>🚏 Остановка №5</h1>
+
+<p>Школа Каларошовки</p>
+
 </header>
 
 <div class="container">
 
-  <div class="panel">
+<div class="panel">
 
-    <h2>Маршруты</h2>
+<h2>Маршруты</h2>
 
-    <select id="city">
-      <option value="">Выберите маршрут</option>
+<select id="city">
 
-      <option value="15">Отачь — 15 лей</option>
+<option value="">Выберите маршрут</option>
 
-      <option value="30">Окница — 30 лей</option>
+<option value="15">
+Отачь — 15 лей
+</option>
 
-      <option value="45">Единцы — 45 лей</option>
+<option value="30">
+Окница — 30 лей
+</option>
 
-      <option value="55">Бричаны — 55 лей</option>
+<option value="45">
+Единцы — 45 лей
+</option>
 
-      <option value="70">Сороки — 70 лей</option>
-    </select>
+<option value="55">
+Бричаны — 55 лей
+</option>
 
-    <button onclick="buyTicket()">
-      Оплатить поездку
-    </button>
+<option value="70">
+Сороки — 70 лей
+</option>
 
-    <div id="ticket"></div>
+</select>
 
-  </div>
+<button onclick="buyTicket()">
 
-  <div class="viewer">
+Оплатить поездку
 
-    <model-viewer
-      src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+</button>
 
-      auto-rotate
+<div id="ticket"></div>
 
-      camera-controls
+</div>
 
-      shadow-intensity="1"
+<div class="viewer">
 
-      exposure="1.2">
+<canvas id="scene"></canvas>
 
-    </model-viewer>
-
-  </div>
+</div>
 
 </div>
 
